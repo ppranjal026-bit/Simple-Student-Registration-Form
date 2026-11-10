@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Simple Form Validation</title>
+</head>
+
+<body style="background-color: aqua;"><center>
+  <h2>Student Registration </h2>
+  <form onsubmit="return validateForm()">
+    Name: <input type="text" id="name"><br><br>
+    Email: <input type="text" id="email"><br><br>
+    Mobile: <input type="text" id="mobile"><br><br>
+    Password: <input type="password" id="password"><br><br>
+    <button type="submit">Register</button>
+  </form>
+  <p id="error" style="color: red;"></p>
+
+  <script>
+    //     Regex (Regular Expression) is a pattern used to search, match, check or replace text.
+    // In simple words, regex is a rule that tells JavaScript what kind of text is allowed. For example, “only 10 digits” or “must contain @”.
+    // Real-life uses: checking email, mobile number or password in forms; finding words in text; replacing text.
+    function validateForm() {
+      // Step 1: Get values from the input boxes
+      let name = document.getElementById("name").value;
+      let email = document.getElementById("email").value;
+      let mobile = document.getElementById("mobile").value;
+      let password = document.getElementById("password").value;
+      let error = document.getElementById("error");
+
+      // Step 2: Regex patterns (rules)
+      let namePattern = /^[A-Za-z ]{3,}$/;                 // only letters & spaces, min 3
+      let emailPattern = /^[a-zA-Z0-9._]+@[a-zA-Z]+\.[a-zA-Z]{2,}$/;  // abc@gmail.com
+      let mobilePattern = /^[6-9][0-9]{9}$/;               // 10 digits, starts with 6-9
+      let passwordPattern = /^(?=.*[A-Z])(?=.*[0-9]).{6,}$/;  // min 6, 1 capital, 1 number
+
+      // Step 3: Check name
+      if (!namePattern.test(name)) {
+        error.innerHTML = "Name should have only letters (at least 3)";
+        return false;   // stop the form
+      }
+
+      // Step 4: Check email
+      if (!emailPattern.test(email)) {
+        error.innerHTML = "Please enter a valid email (e.g. abc@gmail.com)";
+        return false;
+      }
+
+      // Step 5: Check mobile
+      if (!mobilePattern.test(mobile)) {
+        error.innerHTML = "Mobile must be 10 digits and start with 6, 7, 8 or 9";
+        return false;
+      }
+
+      // Step 6: Check password
+      if (!passwordPattern.test(password)) {
+        error.innerHTML = "Password needs 6+ characters, 1 capital letter and 1 number";
+        return false;
+      }
+
+      // Step 7: Everything is correct
+      error.innerHTML = "";
+      alert("Registration successful!");
+      return true;
+    }
+  </script>
+</center>
+</body>
+
+</html>
